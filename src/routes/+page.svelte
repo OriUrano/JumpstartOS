@@ -95,7 +95,7 @@
                 <div class="grid md:grid-cols-3 gap-8">
                     <div class="text-center">
                         <div
-                            class="bg-violet-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4"
+                            class="bg-violet-200 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4"
                         >
                             <span class="text-2xl font-bold text-violet-600"
                                 >1</span
@@ -111,7 +111,7 @@
                     </div>
                     <div class="text-center">
                         <div
-                            class="bg-purple-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4"
+                            class="bg-purple-200 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4"
                         >
                             <span class="text-2xl font-bold text-purple-600"
                                 >2</span
@@ -127,7 +127,7 @@
                     </div>
                     <div class="text-center">
                         <div
-                            class="bg-fuchsia-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4"
+                            class="bg-fuchsia-200 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4"
                         >
                             <span class="text-2xl font-bold text-fuchsia-600"
                                 >3</span
