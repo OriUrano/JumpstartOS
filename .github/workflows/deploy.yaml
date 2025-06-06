@@ -90,10 +90,3 @@ jobs:
           aws cloudfront create-invalidation \
             --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} \
             --paths "/*" # Invalidate all paths for a full refresh
-        env:
-          # This secret holds your CloudFront Distribution ID.
-          # You need to add this as a repository secret in GitHub if you use CloudFront.
-          # For example: CLOUDFRONT_DISTRIBUTION_ID: E123456789ABCDEF
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }} # This should come from the role assumption, but is here as a fallback
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }} # This should come from the role assumption, but is here as a fallback
-          AWS_REGION: ${{ env.AWS_REGION }}
