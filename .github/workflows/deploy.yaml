@@ -71,17 +71,14 @@ jobs:
         run: |
           # Syncs the 'build' directory (output of SvelteKit build) to your S3 bucket.
           # --delete: Removes files from S3 that are no longer in the build directory.
-          # --acl public-read: Makes uploaded files publicly readable (common for static websites).
           # --cache-control: Sets cache headers for browser caching (e.g., 1 hour for static assets, no-cache for index.html)
           # --exclude: Excludes specified patterns (e.g., .DS_Store)
           aws s3 sync build/ s3://${{ env.S3_BUCKET_NAME }}/ \
             --delete \
-            --acl public-read \
             --cache-control "max-age=3600" \
             --exclude ".DS_Store"
           # Invalidate index.html for immediate updates
           aws s3 cp build/index.html s3://${{ env.S3_BUCKET_NAME }}/ \
-            --acl public-read \
             --cache-control "no-cache, no-store, must-revalidate"
 
       # Step 7 (Optional): Invalidate CloudFront cache if you are using it
