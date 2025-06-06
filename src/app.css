@@ -1,5 +1,5 @@
 @import 'tailwindcss';
-@source inline("border-violet-200");
+@source inline("border-{violet,purple,fuchsia,pink}-200");
 /* @plugin '@tailwindcss/forms';
 @plugin '@tailwindcss/typography'; */
 
