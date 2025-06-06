@@ -25,6 +25,8 @@ jobs:
       # The AWS region where your S3 bucket is located
       AWS_REGION: us-east-1
 
+      CLOUDFRONT_DISTRIBUTION_ID: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} # Optional: CloudFront distribution ID for cache invalidation
+
     # Steps involved in the job
     steps:
       # Step 1: Checkout the repository code
@@ -85,8 +87,8 @@ jobs:
       # This step ensures that users get the latest version of your site immediately.
       - name: Invalidate CloudFront Cache
         # Only run this step if CLOUDFRONT_DISTRIBUTION_ID secret is set
-        if: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID != '' }}
+        if: ${{ env.CLOUDFRONT_DISTRIBUTION_ID != '' }}
         run: |
           aws cloudfront create-invalidation \
-            --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} \
+            --distribution-id ${{ env.CLOUDFRONT_DISTRIBUTION_ID }} \
             --paths "/*" # Invalidate all paths for a full refresh
