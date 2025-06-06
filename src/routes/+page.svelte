@@ -10,6 +10,8 @@
         Lightbulb,
         Target,
     } from "@lucide/svelte";
+
+    import AboutCard from "$lib/AboutCard.svelte";
 </script>
 
 <Header />
@@ -23,14 +25,14 @@
             >
                 Open Source
             </span>
-            <span class="text-right"> Contribution </span>
+            <span class="text-right relative bottom-6"> Contribution </span>
         </h1>
         <p class="text-xl text-gray-600 mb-12 max-w-2xl mx-auto pt-4">
             Stop wandering through endless repositories. Tell us your skills,
             and we'll match you with open-source issues you can actually solve.
         </p>
 
-        <div class="flex flex-col sm:flex-row gap-4 justify-center mb-16">
+        <div class="flex flex-col sm:flex-row gap-4 justify-center mb-18">
             <button
                 class="bg-purple-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-purple-700 transition-colors shadow-lg flex items-center justify-center"
             >
@@ -44,7 +46,7 @@
             </button>
         </div>
         <div class="max-w-4xl mx-auto">
-            <div class="grid md:grid-cols-3 gap-8 mb-12 pt-8 max-w-4xl mx-auto">
+            <div class="grid md:grid-cols-3 gap-8 mb-18 pt-8 max-w-4xl mx-auto">
                 <div
                     class="bg-white/70 backdrop-blur-sm p-6 rounded-xl border border-gray-200 hover:shadow-lg transition-shadow"
                 >
@@ -180,61 +182,43 @@
             </div>
 
             <div class="grid md:grid-cols-2 gap-8 mb-12 max-w-4xl mx-auto">
-                <div
-                    class="bg-violet-50 rounded-xl p-6 border border-purple-200"
-                >
-                    <Target class="h-8 w-8 text-violet-600 mb-4" />
-                    <h3 class="text-xl font-semibold text-gray-900 mb-3">
-                        Curated for Your Level
-                    </h3>
-                    <p class="text-gray-600">
-                        Find issues labeled as "good first issue" for beginners,
-                        or more complex challenges for experienced developers.
-                        No more scrolling through irrelevant problems.
-                    </p>
-                </div>
-                <div
-                    class="bg-purple-50 rounded-xl p-6 border border-purple-200"
-                >
-                    <GitBranch class="h-8 w-8 text-purple-600 mb-4" />
-                    <h3 class="text-xl font-semibold text-gray-900 mb-3">
-                        Multiple Platforms
-                    </h3>
-                    <p class="text-gray-600">
-                        We search across GitHub and GitLab to find the best
-                        opportunities, giving you access to thousands of active
-                        open-source projects.
-                    </p>
-                </div>
-                <div
-                    class="bg-fuchsia-50 rounded-xl p-6 border border-fuchsia-200"
-                >
-                    <Lightbulb class="h-8 w-8 text-fuchsia-600 mb-4" />
-                    <h3 class="text-xl font-semibold text-gray-900 mb-3">
-                        Learn & Grow
-                    </h3>
-                    <p class="text-gray-600">
-                        Contributing to open source is the best way to improve
-                        your coding skills, learn new technologies, and build
-                        your professional network.
-                    </p>
-                </div>
-                <div
-                    class="bg-gradient-to-br from-pink-50 to-pink-100 rounded-xl p-6 border border-pink-200"
-                >
-                    <Users class="h-8 w-8 text-pink-600 mb-4" />
-                    <h3 class="text-xl font-semibold text-gray-900 mb-3">
-                        Join the Community
-                    </h3>
-                    <p class="text-gray-600">
-                        Connect with maintainers and other contributors. Build
-                        relationships that can lead to mentorship opportunities
-                        and career growth.
-                    </p>
-                </div>
+                <AboutCard
+                    Icon={Target}
+                    color="violet"
+                    heading="Curated for Your Level"
+                    text='Find issues labeled as "good first issue" for beginners,
+        or more complex challenges for experienced developers.
+        No more scrolling through irrelevant problems.'
+                />
+                <AboutCard
+                    Icon={GitBranch}
+                    color="purple"
+                    heading="Multiple Platforms"
+                    text="We search across GitHub and GitLab to find the best
+        opportunities, giving you access to thousands of active
+        open-source projects."
+                />
+                <AboutCard
+                    Icon={Lightbulb}
+                    color="fuchsia"
+                    heading="Learn & Grow"
+                    text="Contributing to open source is the best way to improve
+        your coding skills, learn new technologies, and build
+        your professional network."
+                />
+                <AboutCard
+                    Icon={Users}
+                    color="pink"
+                    heading="Join the Community"
+                    text="Connect with maintainers and other contributors. Build
+        relationships that can lead to mentorship opportunities
+        and career growth."
+                />
             </div>
 
-            <div class="bg-gradient-to-br from-violet-700 from-30% via-purple-700 via-40% to-fuchsia-700 to-75% text-white rounded-2xl p-8">
+            <div
+                class="bg-gradient-to-br from-violet-700 from-30% via-purple-700 via-40% to-fuchsia-700 to-75% text-white rounded-2xl p-8"
+            >
                 <h2 class="text-2xl font-bold mb-6">
                     Join Thousands of Contributors
                 </h2>
@@ -268,5 +252,4 @@
         </div>
     </div>
     <div class="h-32"></div>
-
 </div>

@@ -1,3 +1,9 @@
 @import 'tailwindcss';
-@plugin '@tailwindcss/forms';
-@plugin '@tailwindcss/typography';
+@source inline("border-violet-200");
+/* @plugin '@tailwindcss/forms';
+@plugin '@tailwindcss/typography'; */
+
+
+* {
+    font-family: 'Rubik', sans-serif;
+}
