@@ -1,0 +1,99 @@
+# Name of the workflow as it appears in GitHub Actions UI
+name: Deploy SvelteKit to S3
+
+# Trigger the workflow on pushes to the 'main' branch
+on:
+  push:
+    branches:
+      - main # Change this to your main branch name if it's different (e.g., 'master', 'develop')
+
+# Permissions required for the workflow
+permissions:
+  id-token: write # Required for OIDC authentication with AWS
+  contents: read  # Required to checkout the repository code
+
+# Define the jobs that make up this workflow
+jobs:
+  build-and-deploy:
+    # Specify the runner environment for this job
+    runs-on: ubuntu-latest
+
+    # Environment variables specific to this job
+    env:
+      # The name of your S3 bucket
+      S3_BUCKET_NAME: jumpstart-os
+      # The AWS region where your S3 bucket is located
+      AWS_REGION: us-east-1
+
+    # Steps involved in the job
+    steps:
+      # Step 1: Checkout the repository code
+      - name: Checkout repository
+        uses: actions/checkout@v4 # Uses the official action to checkout your repository
+
+      # Step 2: Set up Node.js environment
+      - name: Set up Node.js
+        uses: actions/setup-node@v4 # Uses the official action to set up Node.js
+        with:
+          node-version: 20 # Specify the Node.js version suitable for your SvelteKit project
+          cache: 'npm'     # Cache npm dependencies to speed up subsequent runs
+
+      # Step 3: Install SvelteKit project dependencies
+      - name: Install dependencies
+        run: npm install # Installs all dependencies listed in package.json
+
+      # Step 4: Build the SvelteKit project for production
+      # This step assumes you are using @sveltejs/adapter-static.
+      # The build output will be placed in the 'build/' directory by default.
+      - name: Build SvelteKit application
+        run: npm run build # Executes the 'build' script defined in your package.json
+
+      # Step 5: Configure AWS credentials using OIDC
+      # This is the recommended secure way to authenticate with AWS.
+      # You need to set up an OpenID Connect provider in AWS IAM for GitHub.
+      # This action assumes you have an IAM role that the GitHub OIDC provider can assume.
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          # ARN of the IAM role that GitHub Actions will assume.
+          # This role must have permissions to put objects in your S3 bucket.
+          role-to-assume: arn:aws:iam::907903664796:role/JumpstartOSProductionDeployment
+          aws-region: ${{ env.AWS_REGION }} # Uses the AWS region defined in environment variables
+          # Optional: If you want to limit the role assumption to specific branches/tags
+          # role-session-name: sveltekit-deploy-${{ github.ref_name }}
+
+      # Step 6: Deploy the built SvelteKit application to S3
+      # Uses the official AWS CLI action to sync the build directory with the S3 bucket.
+      - name: Upload to S3
+        run: |
+          # Syncs the 'build' directory (output of SvelteKit build) to your S3 bucket.
+          # --delete: Removes files from S3 that are no longer in the build directory.
+          # --acl public-read: Makes uploaded files publicly readable (common for static websites).
+          # --cache-control: Sets cache headers for browser caching (e.g., 1 hour for static assets, no-cache for index.html)
+          # --exclude: Excludes specified patterns (e.g., .DS_Store)
+          aws s3 sync build/ s3://${{ env.S3_BUCKET_NAME }}/ \
+            --delete \
+            --acl public-read \
+            --cache-control "max-age=3600" \
+            --exclude ".DS_Store"
+          # Invalidate index.html for immediate updates
+          aws s3 cp build/index.html s3://${{ env.S3_BUCKET_NAME }}/ \
+            --acl public-read \
+            --cache-control "no-cache, no-store, must-revalidate"
+
+      # Step 7 (Optional): Invalidate CloudFront cache if you are using it
+      # This step ensures that users get the latest version of your site immediately.
+      - name: Invalidate CloudFront Cache
+        # Only run this step if CLOUDFRONT_DISTRIBUTION_ID secret is set
+        if: secrets.CLOUDFRONT_DISTRIBUTION_ID
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} \
+            --paths "/*" # Invalidate all paths for a full refresh
+        env:
+          # This secret holds your CloudFront Distribution ID.
+          # You need to add this as a repository secret in GitHub if you use CloudFront.
+          # For example: CLOUDFRONT_DISTRIBUTION_ID: E123456789ABCDEF
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }} # This should come from the role assumption, but is here as a fallback
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }} # This should come from the role assumption, but is here as a fallback
+          AWS_REGION: ${{ env.AWS_REGION }}
