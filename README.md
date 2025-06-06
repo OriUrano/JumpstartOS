@@ -1,38 +1,65 @@
-# sv
+# JumpstartOS
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+JumpstartOS helps developers find open-source issues that match their skills, making it easier to contribute and grow your portfolio.
 
-## Creating a project
+## Features
 
-If you're seeing this, you've probably already done this step. Congrats!
+- **Skill-based Matching:** Find issues relevant to your technology stack.
+- **Multi-platform Search:** Aggregates issues from GitHub and GitLab.
+- **Beginner Friendly:** Highlights "good first issue" and advanced challenges.
+- **Community Focused:** Connect with maintainers and other contributors.
+
+## Getting Started
+
+### Prerequisites
+
+- [Node.js](https://nodejs.org/) (v20 or higher recommended)
+- [npm](https://www.npmjs.com/)
+
+### Installation
 
 ```bash
-# create a new project in the current directory
-npx sv create
-
-# create a new project in my-app
-npx sv create my-app
+git clone https://github.com/yourusername/jumpstartos.git
+cd jumpstartos
+npm install
 ```
 
-## Developing
+### Development
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+Start the development server:
 
 ```bash
 npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
 ```
 
-## Building
+Visit [http://localhost:5173](http://localhost:5173) in your browser.
 
-To create a production version of your app:
+### Building for Production
 
 ```bash
 npm run build
 ```
 
-You can preview the production build with `npm run preview`.
+Preview the production build:
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+```bash
+npm run preview
+```
+
+## Deployment
+
+JumpstartOS is configured for static site deployment (e.g., AWS S3, Netlify, Vercel). See `.github/workflows/deploy.yaml` for an example GitHub Actions workflow for deploying to AWS S3.
+
+## Tech Stack
+
+- [SvelteKit](https://kit.svelte.dev/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Lucide Icons](https://lucide.dev/icons/)
+
+## Contributing
+
+Contributions are welcome! Please open issues or pull requests for improvements or bug fixes.
+
+## License
+
+MIT License
