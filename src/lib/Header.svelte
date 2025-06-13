@@ -35,7 +35,7 @@
                     About
                 </a>
                 <a
-                    href="/auth/github"
+                    href="#"
                     class="flex items-center space-x-2 bg-gray-900 text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors"
                 >
                     <Github strokeWidth={3} class="h-4 w-4" />
