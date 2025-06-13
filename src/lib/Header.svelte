@@ -1,5 +1,13 @@
 <script>
     import { GitBranch, Github } from "@lucide/svelte";
+    import { preventDefault } from "svelte/legacy";
+
+    // @ts-ignore
+    function scrollIntoView({ target }) {
+        const el = document.querySelector(target.getAttribute("href"));
+        if (!el) return;
+        el.scrollIntoView();
+    }
 </script>
 
 <header
@@ -13,19 +21,21 @@
             </div>
             <nav class="flex items-center space-x-6">
                 <a
-                    href="#"
+                    href="#how-it-works"
+                    on:click|preventDefault={scrollIntoView}
                     class="text-gray-600 hover:text-gray-900 transition-colors"
                 >
                     How it works
                 </a>
                 <a
-                    href="#"
+                    href="#about"
+                    on:click|preventDefault={scrollIntoView}
                     class="text-gray-600 hover:text-gray-900 transition-colors"
                 >
                     About
                 </a>
                 <a
-                    href="#"
+                    href="/auth/github"
                     class="flex items-center space-x-2 bg-gray-900 text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors"
                 >
                     <Github strokeWidth={3} class="h-4 w-4" />

@@ -2,6 +2,10 @@
 /* @plugin '@tailwindcss/forms';
 @plugin '@tailwindcss/typography'; */
 
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 100px; 
+}
 
 * {
     font-family: 'Rubik', sans-serif;
